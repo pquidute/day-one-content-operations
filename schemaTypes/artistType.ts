@@ -1,4 +1,5 @@
 import {defineField, defineType} from 'sanity'
+import { UsersIcon } from '@sanity/icons'
 
 export const artistType = defineType({
   name: 'artist',
@@ -18,4 +19,5 @@ export const artistType = defineType({
       type: 'image',
     }),
   ],
+  icon: UsersIcon
 })
