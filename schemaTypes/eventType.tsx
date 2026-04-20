@@ -1,5 +1,5 @@
 import {defineField, defineType} from 'sanity'
-import { CalendarIcon } from '@sanity/icons'
+import {CalendarIcon} from '@sanity/icons'
 
 export const eventType = defineType({
   name: 'event',
@@ -18,6 +18,17 @@ export const eventType = defineType({
       hidden: ({document}) => !document?.name, // hides the field if document hasn't name
       validation: (rule) => rule.required().error(`Required to generate a page on the website`),
       group: 'details',
+      description: (
+        <details>
+          <summary>Why is it important?</summary>
+          <p>
+            {' '}
+            The slug is what turns this content into a real, accessible page on your website. It
+            defines the URL path (e.g., <code>/my-page</code>), making the page shareable, indexable
+            by search engines, and reachable by users.
+          </p>
+        </details>
+      ),
     }),
     defineField({
       name: 'eventType',
@@ -44,7 +55,7 @@ export const eventType = defineType({
       name: 'venue',
       type: 'reference',
       to: [{type: 'venue'}],
-      readOnly: ({value, document}) => !value && document?.eventType === 'virtual',
+      hidden: ({value, document}) => !value && document?.eventType === 'virtual',
       validation: (rule) =>
         rule.custom((value, context) => {
           if (value && context?.document?.eventType === 'virtual') {
@@ -70,12 +81,14 @@ export const eventType = defineType({
       name: 'details',
       type: 'array',
       of: [{type: 'block'}],
-      group: 'details',
+      description: 'Optional field for adding extra details about the event — like allowed items, special instructions, or anything attendees should know beforehand.',
+      group: 'details'
     }),
     defineField({
       name: 'tickets',
       type: 'url',
-      group: ['editorial', 'details'],
+      description: 'Link the page where tickets are going to be sold',
+      group: ['editorial', 'details']
     }),
   ],
   groups: [
@@ -89,24 +102,25 @@ export const eventType = defineType({
       venue: 'venue.name',
       artist: 'headline.name',
       date: 'date',
-      image: 'image'
+      image: 'image',
     },
     prepare({name, venue, artist, date, image}) {
       const nameFormatted = name || 'Untitled Event'
-      const dateFormatted = date ? new Date(date).toLocaleDateString(undefined, {
-        month: 'short',
-        day: 'numeric',
-        year: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
-      })
-      : ''
+      const dateFormatted = date
+        ? new Date(date).toLocaleDateString(undefined, {
+            month: 'short',
+            day: 'numeric',
+            year: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+          })
+        : ''
 
       return {
         title: artist ? `${nameFormatted} (${artist})` : nameFormatted,
         subtitle: venue ? `${dateFormatted} @${venue}` : dateFormatted,
         media: image || CalendarIcon,
       }
-    }
+    },
   },
 })
