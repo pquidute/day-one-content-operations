@@ -6,6 +6,11 @@ export const structure: StructureResolver = (S) =>
     .title('Content')
     .items([
       S.divider().title('Events'),
+       S.listItem()
+        .title('All')
+        .schemaType('event')
+        .child(S.documentList().title('All Events').filter('_type == "event"'))
+        ,
       S.listItem()
         .title('Upcoming')
         .schemaType('event')
