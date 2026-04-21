@@ -18,6 +18,15 @@ export const eventType = defineType({
       options: {source: 'name'},
       hidden: ({document}) => !document?.name, // hides the field if document hasn't name
       validation: (rule) => rule.required().error(`Required to generate a page on the website`),
+      readOnly: ({value, currentUser}) => {
+        // If it's empty, anyone can edit
+        if (!value) {
+          return false
+        }
+
+        const isAdmin = currentUser?.roles.some((role) => role.name === 'administrator')
+        return !isAdmin // only admins can edit
+      },
       group: 'details',
       description: (
         <details>

@@ -16,4 +16,13 @@ export default defineConfig({
   schema: {
     types: schemaTypes,
   },
+  tools: (prev, {currentUser}) => {
+    const isAdmin = currentUser?.roles.some((role) => role.name === 'administrator')
+
+    if (isAdmin) {
+      return prev
+    }
+
+    return prev.filter((tool) => tool.name !== 'vision')
+  }
 })
