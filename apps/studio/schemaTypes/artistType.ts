@@ -19,7 +19,8 @@ export const artistType = defineType({
       validation: (rule) =>
         rule
           .custom((value) => {
-            if (!value) return 'Consider adding a description to better present the artist across the app'
+            if (!value)
+              return 'Consider adding a description to better present the artist across the app'
 
             const length = value.length
             if (length < 100 || length > 500) {
@@ -33,6 +34,7 @@ export const artistType = defineType({
     defineField({
       name: 'photo',
       type: 'image',
+      options: {hotspot: true},
     }),
   ],
   icon: UsersIcon,
