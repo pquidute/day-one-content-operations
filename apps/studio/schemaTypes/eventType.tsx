@@ -47,6 +47,7 @@ export const eventType = defineType({
         reason: 'Use the "Event Format" field instead.',
       },
       readOnly: true,
+      hidden: true, // hidden for content creators
       options: {
         list: ['in-person', 'virtual'],
         layout: 'radio',
@@ -61,6 +62,7 @@ export const eventType = defineType({
         list: ['in-person', 'virtual'],
         layout: 'radio',
       },
+      validation: (rule) => rule.required(),
       group: 'editorial',
     }),
     defineField({
