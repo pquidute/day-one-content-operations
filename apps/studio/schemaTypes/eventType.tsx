@@ -1,6 +1,6 @@
 import {defineField, defineType} from 'sanity'
 import {CalendarIcon} from '@sanity/icons'
-import { DoorsOpenInput } from './components/doorsOpenIput'
+import {DoorsOpenInput} from './components/doorsOpenIput'
 
 export const eventType = defineType({
   name: 'event',
@@ -43,6 +43,20 @@ export const eventType = defineType({
     defineField({
       name: 'eventType',
       type: 'string',
+      deprecated: {
+        reason: 'Use the "Event Format" field instead.',
+      },
+      readOnly: true,
+      options: {
+        list: ['in-person', 'virtual'],
+        layout: 'radio',
+      },
+      group: 'editorial',
+    }),
+    defineField({
+      name: 'format',
+      title: 'Event Format',
+      type: 'string',
       options: {
         list: ['in-person', 'virtual'],
         layout: 'radio',
@@ -61,17 +75,17 @@ export const eventType = defineType({
       initialValue: 60,
       group: ['details', 'editorial'],
       components: {
-        input: DoorsOpenInput
-      }
+        input: DoorsOpenInput,
+      },
     }),
     defineField({
       name: 'venue',
       type: 'reference',
       to: [{type: 'venue'}],
-      hidden: ({value, document}) => !value && document?.eventType === 'virtual',
+      hidden: ({value, document}) => !value && document?.format === 'virtual',
       validation: (rule) =>
         rule.custom((value, context) => {
-          if (value && context?.document?.eventType === 'virtual') {
+          if (value && context?.document?.format === 'virtual') {
             return 'Only in-person events can have a venue'
           }
 
@@ -94,14 +108,15 @@ export const eventType = defineType({
       name: 'details',
       type: 'array',
       of: [{type: 'block'}],
-      description: 'Optional field for adding extra details about the event — like allowed items, special instructions, or anything attendees should know beforehand.',
-      group: 'details'
+      description:
+        'Optional field for adding extra details about the event — like allowed items, special instructions, or anything attendees should know beforehand.',
+      group: 'details',
     }),
     defineField({
       name: 'tickets',
       type: 'url',
       description: 'Link the page where tickets are going to be sold',
-      group: ['editorial', 'details']
+      group: ['editorial', 'details'],
     }),
   ],
   groups: [

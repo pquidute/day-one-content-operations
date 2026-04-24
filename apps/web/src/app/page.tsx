@@ -5,7 +5,6 @@ import { sanityFetch } from "@/sanity/live";
 const EVENTS_QUERY = defineQuery(`*[
   _type == "event"
   && defined(slug.current)
-  && date > now()
 ]|order(date asc){_id, name, slug, date}`);
 
 export default async function IndexPage() {
