@@ -2,15 +2,6 @@ import Link from "next/link";
 import { defineQuery } from "next-sanity";
 import { sanityFetch } from "@/sanity/live";
 
-type EventListItem = {
-  _id: string;
-  name?: string;
-  slug?: {
-    current?: string;
-  };
-  date?: string;
-};
-
 const EVENTS_QUERY = defineQuery(`*[
   _type == "event"
   && defined(slug.current)
@@ -26,7 +17,7 @@ export default async function IndexPage() {
         Events
       </h1>
       <ul className="grid grid-cols-1 gap-12 lg:grid-cols-2">
-        {events.map((event: EventListItem) => (
+        {events.map((event) => (
           <li
             className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm dark:shadow-gray-900/20"
             key={event._id}
