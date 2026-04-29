@@ -1,7 +1,7 @@
 import { type SanityConfig } from "@sanity/sdk";
 import { SanityApp } from "@sanity/sdk-react";
 import { Flex, Spinner } from "@sanity/ui";
-import { ExampleComponent } from "./ExampleComponent";
+import { Events } from "./components/Events";
 import { SanityUI } from "./SanityUI";
 
 function App() {
@@ -24,8 +24,7 @@ function App() {
   return (
     <SanityUI>
       <SanityApp config={sanityConfigs} fallback={<Loading />}>
-        {/* add your own components here! */}
-        <ExampleComponent />
+        <Events />
       </SanityApp>
     </SanityUI>
   );
