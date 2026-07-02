@@ -120,6 +120,12 @@ export const eventType = defineType({
       description: 'Link the page where tickets are going to be sold',
       group: ['editorial', 'details'],
     }),
+    defineField({
+      name: 'firstPublished',
+      description: 'Automatically set when first published',
+      type: 'datetime',
+      readOnly: true,
+    }),
   ],
   groups: [
     {name: 'details', title: 'Details'},
