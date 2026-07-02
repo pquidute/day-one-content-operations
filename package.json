@@ -10,5 +10,12 @@
   "engines": {
     "node": ">=20.0.0",
     "pnpm": ">=10.0.0"
+  },
+  "devDependencies": {
+    "@sanity/blueprints": "0.21.0",
+    "@sanity/functions": "1.4.0"
+  },
+  "dependencies": {
+    "@sanity/client": "^7.21.0"
   }
 }
